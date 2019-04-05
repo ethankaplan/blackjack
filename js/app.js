@@ -13,14 +13,46 @@ class Player {
     cardImg.classList.remove("outline2");
     cardImg.classList.add(this.hand[this.hand.length - 1].img);
   }
+
+  calcTotal(){
+    this.shown=0;
+      for(let i = 0;i<this.hand.length;i++){
+          
+          if(!Number.isNaN(Number(this.hand[i].val))){
+              this.shown+=Number(this.hand[i].val);
+          }
+          else if(this.hand[i].val!="A"){
+              this.shown+=10;
+             
+          }
+          else{
+              if(this.shown+11<=21){
+                  this.shown+=11;
+                 
+              }
+              else{
+                  this.shown+=1;
+              }
+          }
+  }
+  console.log(this.shown);
+}
+
   addCard() {
     if (this.hand.length < 5) {
       this.hand.push(deck[0]);
       deck.shift();
       this.showLastCard();
+      this.calcTotal();
+      
     }
   }
-}
+
+
+
+
+  }
+
 
 class Comp extends Player {
   constructor() {
@@ -36,6 +68,7 @@ class Comp extends Player {
       } else {
         this.showBackCard();
       }
+      super.calcTotal();
     }
   }
   showLastCard() {
@@ -117,4 +150,6 @@ function initDeck() {
 let player = new Player();
 let computer = new Comp();
 initDeck();
-game.dealAll();
+
+console.log(player.shown);
+console.log(computer.shown);
