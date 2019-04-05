@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Blackjack</title>
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="card-deck-css/css/cardstarter.css">
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+    <h1>Blackjack</h1>
+
+    <div id=table>
+        <p><h2>Dealer's Hand</h2></p>
+        <div class=hand>
+            <div id=dealer1 class="card large outline">a</div>
+            <div id=dealer2 class="card large outline">a</div>
+            <div id=dealer3 class="card large outline">a</div>
+            <div id=dealer4 class="card large outline">a</div>
+            <div id=dealer5 class="card large outline">a</div>
+        </div>
+        <h2>Your Hand</h2>
+       
+        <div class=hand>
+            <div id=play1 class="card large outline2">a</div>
+            <div id=play2 class="card large outline2">a</div>
+            <div id=play3 class="card large outline2">a</div>
+            <div id=play4 class="card large outline2">a</div>
+            <div id=play5 class="card large outline2">a</div>
+        </div>
+   
+
+        <div><span id=nowMoney>You currently have $100</span><p></p>Current bet: <span id=betAmount>
+        </span></div>
+        <div><input type=button value="-5"><input type=button value="+5"></div>
+    <tr>
+        <th><input type=button value="Hit" onclick="player.addCard()"></th>
+        <th><input type=button value="Pass" disabled></th>
+        <th><input type=button value="Split" disabled></th>
+    </tr>
+</div>
+
+
+
+</body>
+</html>
