@@ -26,12 +26,12 @@ class Comp extends Player {
   constructor() {
     super();
   }
-
+//added conditional to addCard so that the second card isn't shown to the player
   addCard() {
-    if (super.hand.length < 5) {
-      super.hand.push(deck[0]);
+    if (this.hand.length < 5) {
+      this.hand.push(deck[0]);
       deck.shift();
-      if (super.hand.length != 2) {
+      if (this.hand.length != 2) {
         this.showLastCard();
       } else {
         this.showBackCard();
@@ -41,17 +41,39 @@ class Comp extends Player {
   showLastCard() {
     let str = `dealer${this.hand.length}`;
     let cardImg = document.getElementById(str);
-    cardImg.classList.remove("outline2");
+    cardImg.classList.remove("outline");
     cardImg.classList.add(this.hand[this.hand.length - 1].img);
   }
 
   showBackCard() {
-    let str = `dealer${super.hand.length}`;
-    let cardImg = document.getElementById(str);
-    cardImg.classList.remove("outline2");
+    let cardImg = document.getElementById(`dealer${this.hand.length}`);
+    cardImg.classList.remove("outline");
     cardImg.classList.add("back");
   }
+
+  showSecondCard(){
+    let str = `dealer2`;
+    let cardImg = document.getElementById(str);
+    cardImg.classList.remove("back");
+    cardImg.classList.add(this.hand[this.hand.length - 1].img);
+  }
+
 }
+
+var game={
+    dealAll(){
+        player.addCard();
+        player.addCard();
+        computer.addCard();
+        computer.addCard();
+    }
+
+
+}
+
+
+
+
 function shuffle() {
   for (let i = 0; i < 500; i++) {
     let location1 = Math.floor(Math.random() * deck.length);
@@ -62,8 +84,6 @@ function shuffle() {
     deck[location2] = tmp;
   }
 }
-
-var dealer = [];
 
 function initDeck() {
   let suits = ["s", "d", "c", "h"];
@@ -91,8 +111,10 @@ function initDeck() {
   shuffle();
 }
 
+
+
+
 let player = new Player();
+let computer = new Comp();
 initDeck();
-player.addCard();
-player.addCard();
-console.log(player.hand);
+game.dealAll();

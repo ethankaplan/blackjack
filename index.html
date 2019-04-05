@@ -29,15 +29,16 @@
             <div id=play4 class="card large outline2">a</div>
             <div id=play5 class="card large outline2">a</div>
         </div>
-   
-
-        <div><span id=nowMoney>You currently have $100</span><p></p>Current bet: <span id=betAmount>
+        <th><input type=button value="Hit" disabled onclick="player.addCard()"></th>
+        <th><input type=button value="Pass" disabled></th>
+        <th><input type=button value="Split" disabled></th>
+        <th><input type=button value="Deal" disabled></th>
+<p></p>
+        <div>You currently have <span id=nowMoney>$100</span></div><div>Current bet: <span id=betAmount>
         </span></div>
         <div><input type=button value="-5"><input type=button value="+5"></div>
     <tr>
-        <th><input type=button value="Hit" onclick="player.addCard()"></th>
-        <th><input type=button value="Pass" disabled></th>
-        <th><input type=button value="Split" disabled></th>
+
     </tr>
 </div>
 
