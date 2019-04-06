@@ -52,11 +52,38 @@ class Player {
   }
 }
 
+
+
 class Comp extends Player {
   constructor() {
     super();
     this.name="dealer";
+    this.secondLive=false;
   }
+//added logic to ignore 2nd card if it's not revealed
+  calcTotal() {
+    this.shown = 0;
+    for (let i = 0; i < this.hand.length; i++) {
+      if(i!=1||this.secondLive){
+        if (!Number.isNaN(Number(this.hand[i].val))) {
+        this.shown += Number(this.hand[i].val);
+      } else if (this.hand[i].val != "A") {
+        this.shown += 10;
+      } else {
+        if (this.shown + 11 <= 21) {
+          this.shown += 11;
+        } else {
+          this.shown += 1;
+        }
+      }
+    }
+    }
+    this.updateTot();
+    console.log(this.shown);
+  }
+
+
+
   //added conditional to addCard so that the second card isn't shown to the player
   addCard() {
     if (this.hand.length < 5) {
@@ -67,9 +94,13 @@ class Comp extends Player {
       } else {
         this.showBackCard();
       }
-      super.calcTotal();
+      this.calcTotal();
     }
   }
+
+
+
+
   showLastCard() {
     let str = `dealer${this.hand.length}`;
     let cardImg = document.getElementById(str);
@@ -88,6 +119,7 @@ class Comp extends Player {
     let cardImg = document.getElementById(str);
     cardImg.classList.remove("back");
     cardImg.classList.add(this.hand[this.hand.length - 1].img);
+    this.secondLive=true;
   }
 }
 
