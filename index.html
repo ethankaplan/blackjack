@@ -12,7 +12,8 @@
     <h1>Blackjack</h1>
 
     <div id=table>
-        <p><h2>Dealer's Hand</h2></p>
+        <h2>Dealer's Hand</h2>
+        <div> is currently at <span id=dealerTotal>0</span></div>
         <div class=hand>
             <div id=dealer1 class="card large outline">a</div>
             <div id=dealer2 class="card large outline">a</div>
@@ -21,6 +22,7 @@
             <div id=dealer5 class="card large outline">a</div>
         </div>
         <h2>Your Hand</h2>
+        <div> is currently at <span id=playTotal>0</span></div>
        
         <div class=hand>
             <div id=play1 class="card large outline2">a</div>
@@ -29,14 +31,14 @@
             <div id=play4 class="card large outline2">a</div>
             <div id=play5 class="card large outline2">a</div>
         </div>
-        <th><input type=button value="Hit" disabled onclick="player.addCard()"></th>
-        <th><input type=button value="Pass" disabled></th>
-        <th><input type=button value="Split" disabled></th>
-        <th> <input type=button value="Deal" onclick="game.dealAll()"> </th>
+        <th><input type=button value="Hit" id=hitBut disabled onclick="player.addCard()"></th>
+        <th><input type=button value="Stand"  id= passBut disabled></th>
+        <th><input type=button value="Split" id=splitBut disabled></th>
+        <th> <input type=button value="Deal" id=dealBut onclick="game.dealAll()"> </th>
 <p></p>
         <div>You currently have <span id=nowMoney>$100</span></div><div>Current bet: <span id=betAmount>
         </span></div>
-        <div><input type=button value="-5"><input type=button value="+5"></div>
+        <div><input type=button value="-5" id=down5><input type=button value="+5" id=up5></div>
     <tr>
 
     </tr>

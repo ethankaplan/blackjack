@@ -5,6 +5,15 @@ class Player {
     this.hand = [];
     this.split = [];
     this.shown = 0;
+    this.name="play";
+  }
+
+  updateTot(){
+    let str = `${this.name}Total`;
+    console.log(str);
+    document.getElementById(str).innerHTML=this.shown;
+    
+    
   }
 
   showLastCard() {
@@ -14,29 +23,24 @@ class Player {
     cardImg.classList.add(this.hand[this.hand.length - 1].img);
   }
 
-  calcTotal(){
-    this.shown=0;
-      for(let i = 0;i<this.hand.length;i++){
-          
-          if(!Number.isNaN(Number(this.hand[i].val))){
-              this.shown+=Number(this.hand[i].val);
-          }
-          else if(this.hand[i].val!="A"){
-              this.shown+=10;
-             
-          }
-          else{
-              if(this.shown+11<=21){
-                  this.shown+=11;
-                 
-              }
-              else{
-                  this.shown+=1;
-              }
-          }
+  calcTotal() {
+    this.shown = 0;
+    for (let i = 0; i < this.hand.length; i++) {
+      if (!Number.isNaN(Number(this.hand[i].val))) {
+        this.shown += Number(this.hand[i].val);
+      } else if (this.hand[i].val != "A") {
+        this.shown += 10;
+      } else {
+        if (this.shown + 11 <= 21) {
+          this.shown += 11;
+        } else {
+          this.shown += 1;
+        }
+      }
+    }
+    this.updateTot();
+    console.log(this.shown);
   }
-  console.log(this.shown);
-}
 
   addCard() {
     if (this.hand.length < 5) {
@@ -44,21 +48,16 @@ class Player {
       deck.shift();
       this.showLastCard();
       this.calcTotal();
-      
     }
   }
-
-
-
-
-  }
-
+}
 
 class Comp extends Player {
   constructor() {
     super();
+    this.name="dealer";
   }
-//added conditional to addCard so that the second card isn't shown to the player
+  //added conditional to addCard so that the second card isn't shown to the player
   addCard() {
     if (this.hand.length < 5) {
       this.hand.push(deck[0]);
@@ -84,28 +83,42 @@ class Comp extends Player {
     cardImg.classList.add("back");
   }
 
-  showSecondCard(){
+  showSecondCard() {
     let str = `dealer2`;
     let cardImg = document.getElementById(str);
     cardImg.classList.remove("back");
     cardImg.classList.add(this.hand[this.hand.length - 1].img);
   }
-
 }
 
-var game={
-    dealAll(){
+var game = {
+  dealAll() {
+    setTimeout(function () {
         player.addCard();
+        
+    }, 200);
+    setTimeout(function () {
+        computer.addCard();
+        
+    }, 400);
+    setTimeout(function () {
         player.addCard();
+        
+    }, 600);
+    setTimeout(function () {
         computer.addCard();
-        computer.addCard();
-    }
+        
+    }, 800);
+    
+    // computer.addCard();
+    // player.addCard();
+    // computer.addCard();
+    document.getElementById("dealBut").disabled = true;
+    document.getElementById("hitBut").disabled = false;
+    document.getElementById("passBut").disabled = false;
 
-
-}
-
-
-
+  }
+};
 
 function shuffle() {
   for (let i = 0; i < 500; i++) {
@@ -143,9 +156,6 @@ function initDeck() {
   }
   shuffle();
 }
-
-
-
 
 let player = new Player();
 let computer = new Comp();
