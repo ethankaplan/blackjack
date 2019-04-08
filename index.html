@@ -9,7 +9,7 @@
     <script defer src="js/app.js"></script>
 </head>
 <body>
-    <h1>Blackjack</h1>
+   
 
     <div id=table>
         <h2>Dealer's Hand</h2>
@@ -22,7 +22,7 @@
             <div id=dealer5 class="card large outline">a</div>
         </div>
         <h2>Your Hand</h2>
-        <div> is currently at <span id=playTotal>0</span></div>
+        <div id=result> is currently at <span id=playTotal>0</span></div>
        
         <div class=hand>
             <div id=play1 class="card large outline2">a</div>
@@ -36,9 +36,9 @@
         <th><input type=button value="Split" id=splitBut disabled></th>
         <th> <input type=button value="Deal" id=dealBut onclick="game.dealAll()"> </th>
 <p></p>
-        <div>You currently have <span id=nowMoney>$100</span></div><div>Current bet: <span id=betAmount>
+        <div>You currently have $<span id=nowMoney>100</span></div><div>Current bet: $<span id=betAmount>5
         </span></div>
-        <div><input type=button value="-5" id=down5><input type=button value="+5" id=up5></div>
+        <div><input type=button value="-5" id=down5 onclick="betChange(-5)"><input type=button value="+5" onclick="betChange(5)" id=up5></div>
     <tr>
 
     </tr>
