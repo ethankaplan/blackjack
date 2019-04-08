@@ -10,7 +10,7 @@ class Player {
 
   updateTot() {
     let str = `${this.name}Total`;
-    console.log(str);
+    
     document.getElementById(str).innerHTML = this.shown;
   }
 
@@ -37,7 +37,7 @@ class Player {
       }
     }
     this.updateTot();
-    console.log(this.shown);
+    
   }
 
   addCard() {
@@ -78,7 +78,7 @@ class Comp extends Player {
       }
     }
     this.updateTot();
-    console.log(this.shown);
+    
   }
 
   //added conditional to addCard so that the second card isn't shown to the player
@@ -119,32 +119,38 @@ class Comp extends Player {
 }
 
 var game = {
+    resetToDefault() {
+        //resets board to neutral state
+        //clear hands
+        let playhand = player.hand.length;
+        let comphand = computer.hand.length;
+        for (let i = 0; i < playhand; i++) {
+            let str = `play${i + 1}`;
+            let cardImg = document.getElementById(str);
+            
+            cardImg.classList.add("outline2");
+            
+            cardImg.classList.remove(player.hand[0].img);
+            player.hand.shift();
+            
+        }
+        for (let i = 0; i < comphand; i++) {
+            let str = `dealer${i + 1}`;
+            let cardImg = document.getElementById(str);
+            
+            cardImg.classList.add("outline");
+            cardImg.classList.remove(computer.hand[0].img);
+            computer.hand.shift();
+        }
+         //reset text on screen
+        document.getElementById("result").innerHTML = " is currently at <span id=playTotal>0</span>";
+        computer.calcTotal();
+        //resets computer's second card visibility
+        computer.secondLive=false;
+    },
   dealAll() {
-    //resets board to neutral state
-    //clear hands
-    let playhand = player.hand.length;
-    let comphand = computer.hand.length;
-
-    for (let i = 0; i < playhand; i++) {
-      let str = `play${i + 1}`;
-      let cardImg = document.getElementById(str);
-      console.log(cardImg);
-      cardImg.classList.add("outline2");
-      console.log(player.hand[0].img);
-      cardImg.classList.remove(player.hand[0].img);
-      player.hand.shift();
-      console.log(player.hand);
-    }
-    for (let i = 0; i < comphand; i++) {
-      let str = `dealer${i + 1}`;
-      let cardImg = document.getElementById(str);
-      console.log(cardImg);
-      cardImg.classList.add("outline");
-      cardImg.classList.remove(computer.hand[0].img);
-      computer.hand.shift();
-    }
-    //reset text on screen
-    
+    this.resetToDefault();
+   
 
     initDeck();
     setTimeout(function() {
@@ -158,6 +164,7 @@ var game = {
     }, 600);
     setTimeout(function() {
       computer.addCard();
+      console.log(computer.hand.length);
       if (player.shown == 21) {
         standing();
       }
@@ -171,6 +178,8 @@ var game = {
     document.getElementById("passBut").disabled = false;
   }
 };
+
+
 
 function shuffle() {
   for (let i = 0; i < 500; i++) {
@@ -223,7 +232,7 @@ var standing = () => {
       computer.hand.length < 5 &&
       computer.shown < player.shown
     ) {
-      console.log(computer.shown);
+      
       computer.addCard();
     }
   }, 400);
@@ -238,7 +247,7 @@ var standing = () => {
 };
 
 var findWinner = () => {
-  console.log(document.getElementById("result").innerHTML);
+  
   if (player.shown <= 21 && computer.shown <= 21) {
     if (player.shown == 21 && player.hand.length == 2) {
       if (computer.shown != 21 && computer.hand.length > 2) {
@@ -251,19 +260,21 @@ var findWinner = () => {
       }
     } else if (computer.shown > player.shown) {
       document.getElementById("result").innerHTML = "The dealer's hand won";
-      player.money -= document.getElementById("betAmount").innerText;
+      player.money -= Number(document.getElementById("betAmount").innerText);
     } else if (player.shown > computer.shown) {
       document.getElementById("result").innerHTML = "Your hand won!";
-      player.money += document.getElementById("betAmount").innerText;
+      player.money += Number(document.getElementById("betAmount").innerText);
     } else {
       document.getElementById("result").innerHTML = "It's a tie!";
     }
   } else if (player.shown > 21 && computer.shown <= 21) {
     document.getElementById("result").innerHTML = "You bust! Dealer won";
-    player.money -= document.getElementById("betAmount").innerText;
+    player.money -= Number(document.getElementById("betAmount").innerText);
   } else if (player.shown <= 21 && computer.shown > 21) {
     document.getElementById("result").innerHTML = "The dealer bust! You've won";
-    player.money += document.getElementById("betAmount").innerText;
+    player.money += Number(document.getElementById("betAmount").innerText);
+  } else if (player.shown > 21 && computer.shown > 21) {
+    document.getElementById("result").innerHTML = "Double bust! Tie";
   } else {
     alert("EDGE CASE PLEASE ADDRESS");
   }
