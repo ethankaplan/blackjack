@@ -242,7 +242,7 @@ var standing = () => {
     while (
       computer.shown < 17 &&
       computer.hand.length < 5 &&
-      computer.shown < player.shown
+      computer.shown <= player.shown
     ) {
       computer.addCard();
     }
