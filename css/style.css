@@ -2,9 +2,12 @@ body{
     background-color: brown;
 
 }
-
+.texture{
+    background-image: url(https://i.stack.imgur.com/pMAiU.jpg);
+    border-radius: 25px;
+}
 .hand{
-    background-color:green;
+    background-color:rgba(0, 131, 0,.65);
     margin:0;
     display:flex;
     flex-direction: row;
@@ -13,8 +16,11 @@ body{
     height:60%;
     min-height: 200px;
     height: 70%;
-   max-height: 400px;
+    max-height: 400px;
     max-width: 700px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 20px black;
+
 }
 
 img{
@@ -27,4 +33,8 @@ img{
     width: 40%;
     text-align: center;
     margin:auto;
+}
+
+#buttonHolder{
+    margin-top:20px;
 }

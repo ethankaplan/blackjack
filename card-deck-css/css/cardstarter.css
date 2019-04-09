@@ -1,5 +1,6 @@
 @charset "UTF-8";
 .card {
+  box-shadow: 10px 10px 30px rgb(0, 61, 0);
   box-sizing: border-box;
   display: inline-block;
   margin: 5px 5px 5px 5px;
