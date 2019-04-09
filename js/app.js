@@ -1,7 +1,7 @@
 var deck = [];
 class Player {
   constructor() {
-    this.money = 100;
+    this.money = 107.5;
     this.hand = [];
     this.split = [];
     this.shown = 0;
@@ -313,18 +313,20 @@ var findWinner = () => {
 };
 
 var betChange = num => {
-  
+  console.log(`money: ${player.money}, bet before: ${player.bet}`);
   if (player.bet + num > 0 && player.bet + num <= player.money) {
     player.bet+=num;
-
-    document.getElementById("betAmount").innerText = (player.bet+player.bet%5);
+    player.bet+=player.bet%5;
+  document.getElementById("betAmount").innerText = (player.bet);
   } else if (player.bet + num > player.money) {
     player.bet=player.money;
     document.getElementById("betAmount").innerText = player.bet;
   }
+  console.log(`bet after ${player.bet}`);
 };
 
 //working area
 
 let player = new Player();
+document.getElementById("nowMoney").innerText = player.money;
 let computer = new Comp();
