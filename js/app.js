@@ -240,6 +240,7 @@ var standing = () => {
 
   setTimeout(function() {
     while (
+      player.shown<=21&&
       computer.shown < 17 &&
       computer.hand.length < 5 &&
       computer.shown <= player.shown
@@ -276,16 +277,14 @@ var findWinner = () => {
       document.getElementById("result").innerHTML =
         "Dealer blackjack, you lost.";
       player.money -= player.bet;
-    } else if (computer.shown > player.shown) {
+    } else if (computer.shown > player.shown && computer.shown<=21) {
       document.getElementById("result").innerHTML = "The dealer's hand won";
       player.money -= player.bet;
-    } else if (player.shown > computer.shown) {
+    } else if (player.shown > computer.shown&&player.shown<=21) {
       document.getElementById("result").innerHTML = "Your hand won!";
       player.money += player.bet;
-    } else {
-      document.getElementById("result").innerHTML = "It's a tie!";
-    }
-  } else if (player.shown > 21 && computer.shown <= 21) {
+    } 
+   else if (player.shown > 21 && computer.shown <= 21) {
     document.getElementById("result").innerHTML = "You bust! Dealer won";
     player.money -= player.bet;
   } else if (player.shown <= 21 && computer.shown > 21) {
@@ -293,7 +292,7 @@ var findWinner = () => {
     player.money += player.bet;
   } else if (player.shown > 21 && computer.shown > 21) {
     document.getElementById("result").innerHTML = "Double bust! Tie";
-  } else {
+  }} else {
     alert("EDGE CASE PLEASE ADDRESS");
   }
   
