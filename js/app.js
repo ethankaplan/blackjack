@@ -6,6 +6,7 @@ class Player {
     this.split = [];
     this.shown = 0;
     this.name = "play";
+    this.bet=0;
   }
 
   updateTot() {
@@ -122,6 +123,7 @@ class Comp extends Player {
 }
 
 var game = {
+  
   resetToDefault() {
     //resets board to neutral state
     //clear hands
@@ -137,6 +139,7 @@ var game = {
 
       cardImg.classList.remove(player.hand[0].img);
       player.hand.shift();
+     
     }
     for (let i = 0; i < comphand; i++) {
       let str = `dealer${i + 1}`;
@@ -152,6 +155,7 @@ var game = {
     computer.calcTotal();
     //resets computer's second card visibility
     computer.secondLive = false;
+    player.bet=0;
   },
   dealAll() {
     this.resetToDefault();
@@ -173,6 +177,7 @@ var game = {
         standing();
       }
     }, 800);
+    
     document.getElementById("down5").disabled = true;
     document.getElementById("up5").disabled = true;
 
@@ -308,11 +313,13 @@ var findWinner = () => {
 };
 
 var betChange = num => {
-  let currentBet = Number(document.getElementById("betAmount").innerText);
-  if (currentBet + num > 0 && currentBet + num <= player.money) {
-    document.getElementById("betAmount").innerText = currentBet + num;
-  } else if (currentBet + num > player.money) {
-    document.getElementById("betAmount").innerText = player.money;
+  
+  if (player.bet + num > 0 && player.bet + num <= player.money) {
+    player.bet+=num;
+    document.getElementById("betAmount").innerText = player.bet;
+  } else if (player.bet + num > player.money) {
+    player.bet=player.money;
+    document.getElementById("betAmount").innerText = player.bet;
   }
 };
 
