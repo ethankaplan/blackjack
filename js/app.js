@@ -1,7 +1,7 @@
 var deck = [];
 class Player {
   constructor() {
-    this.money = 107.5;
+    this.money = 100;
     this.hand = [];
     this.split = [];
     this.shown = 0;
