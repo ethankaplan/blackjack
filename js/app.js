@@ -23,18 +23,20 @@ class Player {
 
   calcTotal() {
     this.shown = 0;
+    let aces =0
     for (let i = 0; i < this.hand.length; i++) {
       if (!Number.isNaN(Number(this.hand[i].val))) {
         this.shown += Number(this.hand[i].val);
       } else if (this.hand[i].val != "A") {
         this.shown += 10;
       } else {
-        if (this.shown + 11 <= 21) {
-          this.shown += 11;
-        } else {
-          this.shown += 1;
-        }
+          this.shown += 11; 
+          aces++;
       }
+    }
+    while(aces>0&&this.shown>21){
+      this.shown-=10;
+      aces--;
     }
     this.updateTot();
   }
