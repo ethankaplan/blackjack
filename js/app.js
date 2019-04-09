@@ -6,7 +6,7 @@ class Player {
     this.split = [];
     this.shown = 0;
     this.name = "play";
-    this.bet=0;
+    this.bet=5;
   }
 
   updateTot() {
@@ -155,7 +155,7 @@ var game = {
     computer.calcTotal();
     //resets computer's second card visibility
     computer.secondLive = false;
-    player.bet=0;
+    
   },
   dealAll() {
     this.resetToDefault();
@@ -262,12 +262,12 @@ var findWinner = () => {
   console.log(`Player total ${player.shown}, hand ${player.hand.length}`);
   console.log(`Computer total ${computer.shown}, hand ${computer.hand.length}`);
   console.log("--------------");
-  if (player.shown <= 21 && computer.shown <= 21) {
+  if (player.shown <= 21 || computer.shown <= 21) {
     if (player.shown == 21 && player.hand.length == 2) {
       if (computer.shown != 21 || computer.hand.length > 2) {
         document.getElementById("result").innerHTML = "YOU GOT A BLACKJACK!";
         player.money +=
-          Number(document.getElementById("betAmount").innerText) * 1.5;
+          player.bet * 1.5;
       } else if (computer.shown == 21 && computer.hand.length == 2) {
         document.getElementById("result").innerHTML =
           "Both got blackjack, it's a tie!";
@@ -275,22 +275,22 @@ var findWinner = () => {
     } else if (computer.shown == 21 && computer.hand.length == 21) {
       document.getElementById("result").innerHTML =
         "Dealer blackjack, you lost.";
-      player.money -= Number(document.getElementById("betAmount").innerText);
+      player.money -= player.bet;
     } else if (computer.shown > player.shown) {
       document.getElementById("result").innerHTML = "The dealer's hand won";
-      player.money -= Number(document.getElementById("betAmount").innerText);
+      player.money -= player.bet;
     } else if (player.shown > computer.shown) {
       document.getElementById("result").innerHTML = "Your hand won!";
-      player.money += Number(document.getElementById("betAmount").innerText);
+      player.money += player.bet;
     } else {
       document.getElementById("result").innerHTML = "It's a tie!";
     }
   } else if (player.shown > 21 && computer.shown <= 21) {
     document.getElementById("result").innerHTML = "You bust! Dealer won";
-    player.money -= Number(document.getElementById("betAmount").innerText);
+    player.money -= player.bet;
   } else if (player.shown <= 21 && computer.shown > 21) {
     document.getElementById("result").innerHTML = "The dealer bust! You've won";
-    player.money += Number(document.getElementById("betAmount").innerText);
+    player.money += player.bet;
   } else if (player.shown > 21 && computer.shown > 21) {
     document.getElementById("result").innerHTML = "Double bust! Tie";
   } else {
@@ -301,8 +301,7 @@ var findWinner = () => {
   if (player.money > 0) {
     document.getElementById("down5").disabled = false;
     document.getElementById("up5").disabled = false;
-    document.getElementById("betAmount").innerText = 0;
-    betChange(5);
+    document.getElementById("betAmount").innerText = 5;
   } else {
     document.getElementById("result").innerHTML = "You're out of money!";
     document.getElementById("result").setAttribute("style", "color:white");
@@ -310,13 +309,15 @@ var findWinner = () => {
     document.getElementById("up5").disabled = true;
     document.getElementById("dealBut").disabled = true;
   }
+  player.bet=5;
 };
 
 var betChange = num => {
   
   if (player.bet + num > 0 && player.bet + num <= player.money) {
     player.bet+=num;
-    document.getElementById("betAmount").innerText = player.bet;
+
+    document.getElementById("betAmount").innerText = (player.bet+player.bet%5);
   } else if (player.bet + num > player.money) {
     player.bet=player.money;
     document.getElementById("betAmount").innerText = player.bet;
