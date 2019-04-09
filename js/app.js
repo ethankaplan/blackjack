@@ -50,6 +50,9 @@ class Player {
       if (this.shown > 21) {
         standing();
       }
+      else if(this.hand.length==5){
+        standing();
+      }
     }
   }
 }
@@ -165,7 +168,7 @@ var game = {
     }, 600);
     setTimeout(function() {
       computer.addCard();
-      console.log(computer.hand.length);
+      
       if (player.shown == 21) {
         standing();
       }
@@ -251,9 +254,12 @@ var standing = () => {
 };
 
 var findWinner = () => {
+  console.log(`Player total ${player.shown}, hand ${player.hand.length}`);
+  console.log(`Computer total ${computer.shown}, hand ${computer.hand.length}`);
+  console.log("--------------");
   if (player.shown <= 21 && computer.shown <= 21) {
     if (player.shown == 21 && player.hand.length == 2) {
-      if (computer.shown != 21 && computer.hand.length > 2) {
+      if (computer.shown != 21 || computer.hand.length > 2) {
         document.getElementById("result").innerHTML = "YOU GOT A BLACKJACK!";
         player.money +=
           Number(document.getElementById("betAmount").innerText) * 1.5;
@@ -285,7 +291,7 @@ var findWinner = () => {
   } else {
     alert("EDGE CASE PLEASE ADDRESS");
   }
-  console.log(player.money);
+  
   document.getElementById("nowMoney").innerText = player.money;
   if (player.money > 0) {
     document.getElementById("down5").disabled = false;
