@@ -5,3 +5,5 @@ Double down doubles your current bet, up to your bank, gives you a card, then st
 
 The dealer draws til they have a minimum of 17 or they're greater than you. 
 Game ends when you've lost it all to your gambling addiction.
+
+I'm commiting this real fast since mike is putting it on screen.
