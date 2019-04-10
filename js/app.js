@@ -6,7 +6,7 @@ class Player {
     this.split = [];
     this.shown = 0;
     this.name = "play";
-    this.bet=5;
+    this.bet = 5;
   }
 
   updateTot() {
@@ -24,19 +24,19 @@ class Player {
 
   calcTotal() {
     this.shown = 0;
-    let aces =0
+    let aces = 0;
     for (let i = 0; i < this.hand.length; i++) {
       if (!Number.isNaN(Number(this.hand[i].val))) {
         this.shown += Number(this.hand[i].val);
       } else if (this.hand[i].val != "A") {
         this.shown += 10;
       } else {
-          this.shown += 11; 
-          aces++;
+        this.shown += 11;
+        aces++;
       }
     }
-    while(aces>0&&this.shown>21){
-      this.shown-=10;
+    while (aces > 0 && this.shown > 21) {
+      this.shown -= 10;
       aces--;
     }
     this.updateTot();
@@ -50,8 +50,7 @@ class Player {
       this.calcTotal();
       if (this.shown > 21) {
         standing();
-      }
-      else if(this.hand.length==5){
+      } else if (this.hand.length == 5) {
         standing();
       }
     }
@@ -123,7 +122,6 @@ class Comp extends Player {
 }
 
 var game = {
-  
   resetToDefault() {
     //resets board to neutral state
     //clear hands
@@ -139,7 +137,6 @@ var game = {
 
       cardImg.classList.remove(player.hand[0].img);
       player.hand.shift();
-     
     }
     for (let i = 0; i < comphand; i++) {
       let str = `dealer${i + 1}`;
@@ -155,7 +152,6 @@ var game = {
     computer.calcTotal();
     //resets computer's second card visibility
     computer.secondLive = false;
-    
   },
   dealAll() {
     this.resetToDefault();
@@ -172,12 +168,12 @@ var game = {
     }, 600);
     setTimeout(function() {
       computer.addCard();
-      
+
       if (player.shown == 21) {
         standing();
       }
     }, 800);
-    
+
     document.getElementById("down5").disabled = true;
     document.getElementById("up5").disabled = true;
 
@@ -187,6 +183,7 @@ var game = {
     document.getElementById("dealBut").disabled = true;
     document.getElementById("hitBut").disabled = false;
     document.getElementById("passBut").disabled = false;
+    document.getElementById("dubBut").disabled=false;
   }
 };
 
@@ -227,6 +224,12 @@ function initDeck() {
   shuffle();
 }
 
+let doubledown =()=>{
+  betChange(player.bet);
+  player.addCard();
+  standing();
+}
+
 var standing = () => {
   // document.getElementById("dealBut").disabled = false;
   // document.getElementById("hitBut").disabled = true;
@@ -240,7 +243,7 @@ var standing = () => {
 
   setTimeout(function() {
     while (
-      player.shown<=21&&
+      player.shown <= 21 &&
       computer.shown < 17 &&
       computer.hand.length < 5 &&
       computer.shown <= player.shown
@@ -257,6 +260,7 @@ var standing = () => {
   document.getElementById("dealBut").disabled = false;
   document.getElementById("hitBut").disabled = true;
   document.getElementById("passBut").disabled = true;
+  document.getElementById("dubBut").disabled=true;
 };
 
 var findWinner = () => {
@@ -267,8 +271,7 @@ var findWinner = () => {
     if (player.shown == 21 && player.hand.length == 2) {
       if (computer.shown != 21 || computer.hand.length > 2) {
         document.getElementById("result").innerHTML = "YOU GOT A BLACKJACK!";
-        player.money +=
-          player.bet * 1.5;
+        player.money += player.bet * 1.5;
       } else if (computer.shown == 21 && computer.hand.length == 2) {
         document.getElementById("result").innerHTML =
           "Both got blackjack, it's a tie!";
@@ -277,25 +280,26 @@ var findWinner = () => {
       document.getElementById("result").innerHTML =
         "Dealer blackjack, you lost.";
       player.money -= player.bet;
-    } else if (computer.shown > player.shown && computer.shown<=21) {
+    } else if (computer.shown > player.shown && computer.shown <= 21) {
       document.getElementById("result").innerHTML = "The dealer's hand won";
       player.money -= player.bet;
-    } else if (player.shown > computer.shown&&player.shown<=21) {
+    } else if (player.shown > computer.shown && player.shown <= 21) {
       document.getElementById("result").innerHTML = "Your hand won!";
       player.money += player.bet;
-    } 
-   else if (player.shown > 21 && computer.shown <= 21) {
-    document.getElementById("result").innerHTML = "You bust! Dealer won";
-    player.money -= player.bet;
-  } else if (player.shown <= 21 && computer.shown > 21) {
-    document.getElementById("result").innerHTML = "The dealer bust! You've won";
-    player.money += player.bet;
-  } else if (player.shown > 21 && computer.shown > 21) {
-    document.getElementById("result").innerHTML = "Double bust! Tie";
-  }} else {
+    } else if (player.shown > 21 && computer.shown <= 21) {
+      document.getElementById("result").innerHTML = "You bust! Dealer won";
+      player.money -= player.bet;
+    } else if (player.shown <= 21 && computer.shown > 21) {
+      document.getElementById("result").innerHTML =
+        "The dealer bust! You've won";
+      player.money += player.bet;
+    } else if (player.shown > 21 && computer.shown > 21) {
+      document.getElementById("result").innerHTML = "Double bust! Tie";
+    }
+  } else {
     alert("EDGE CASE PLEASE ADDRESS");
   }
-  
+
   document.getElementById("nowMoney").innerText = player.money;
   if (player.money > 0) {
     document.getElementById("down5").disabled = false;
@@ -308,17 +312,17 @@ var findWinner = () => {
     document.getElementById("up5").disabled = true;
     document.getElementById("dealBut").disabled = true;
   }
-  player.bet=5;
+  player.bet = 5;
 };
 
 var betChange = num => {
   console.log(`money: ${player.money}, bet before: ${player.bet}`);
   if (player.bet + num > 0 && player.bet + num <= player.money) {
-    player.bet+=num;
-    player.bet+=player.bet%5;
-  document.getElementById("betAmount").innerText = (player.bet);
+    player.bet += num;
+    player.bet += player.bet % 5;
+    document.getElementById("betAmount").innerText = player.bet;
   } else if (player.bet + num > player.money) {
-    player.bet=player.money;
+    player.bet = player.money;
     document.getElementById("betAmount").innerText = player.bet;
   }
   console.log(`bet after ${player.bet}`);
