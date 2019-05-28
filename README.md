@@ -11,6 +11,7 @@ Future plans:
 <ul>
   <li>Remake front end in React</li>
   <li>Add split</li>
+  <li>Zhuzh up the visuals with wireframes and graphics from a UI designer friend</li>
 </ul>
 
 <a href="https://ethankaplan.github.io/blackjack/">Link to game</a>
